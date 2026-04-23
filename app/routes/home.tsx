@@ -36,7 +36,7 @@ export default function Home() {
                 return false;
             }
 
-            setProjects((prev) => [newItem, ...prev]);
+            setProjects((prev) => [saved, ...prev]);
 
             // Persist the base64Image into localStorage
             // const existingUploadsJson = localStorage.getItem("uploads");
