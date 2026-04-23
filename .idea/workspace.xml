@@ -5,7 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6788d764-b5cd-4fb8-8edd-a3ccd0534477" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/routes/home.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/home.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -37,7 +36,7 @@
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
     "codeWithMe.voiceChat.enabledByDefault": "false",
     "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
-    "git-widget-placeholder": "hosting-images",
+    "git-widget-placeholder": "Merging hosting-images",
     "javascript.preferred.runtime.type.id": "node",
     "junie.onboarding.icon.badge.shown": "true",
     "node.js.detected.package.eslint": "true",
@@ -74,7 +73,7 @@
       <workItem from="1776877026650" duration="11918000" />
       <workItem from="1776920963480" duration="2308000" />
       <workItem from="1776923438234" duration="2868000" />
-      <workItem from="1776926351254" duration="16136000" />
+      <workItem from="1776926351254" duration="16514000" />
     </task>
     <servers />
   </component>
