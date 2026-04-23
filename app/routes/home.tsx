@@ -58,7 +58,7 @@ export default function Home() {
                     name: saved.name,
                 }
             });
-            });
+
 
             return true;
         } catch (error) {
