@@ -21,49 +21,42 @@ const Navbar = () => {
             console.error(`Puter sign in failed: ${e}`);
         }
     };
+
     return(
-        <header className= "navbar">
-            <nav className= "inner">
+        <header className="navbar">
+            <nav className="inner">
                 <div className="left">
                     <div className="brand">
                         <Box className="logo" />
-
-                        <span className="name">
-                            Tars
-                        </span>
+                        <span className="name">Tars</span>
                     </div>
 
                     <ul className="links">
-                        <a href="#">Product</a>
-                        <a href="#">Pricing</a>
-                        <a href="#">Community</a>
-                        <a href="#">Enterprise</a>
+                        <li><a href="#">Product</a></li>
+                        <li><a href="#">Pricing</a></li>
+                        <li><a href="#">Community</a></li>
+                        <li><a href="#">Enterprise</a></li>
                     </ul>
                 </div>
 
                 <div className="actions">
-                    {isSignedIn ?(
+                    {isSignedIn ? (
                         <>
                             <span className="greeting">
                                 {userName ? `Hi, ${userName}` : 'signed in'}
                             </span>
-
-                            <Button size ="sm" onClick={handleAuthClick} className="btn">
+                            <Button size="sm" onClick={handleAuthClick} className="btn">
                                 Log Out
                             </Button>
                         </>
                     ) : (
                         <>
-                            <Button
-                                onClick={handleAuthClick}
-                                size="sm" variant="ghost">
+                            <Button onClick={handleAuthClick} size="sm" variant="ghost">
                                 Log In
                             </Button>
-
                             <a href="#upload" className="cta">Get Started</a>
                         </>
                     )}
-
                 </div>
             </nav>
         </header>
@@ -71,3 +64,6 @@ const Navbar = () => {
 }
 
 export default Navbar
+
+
+
