@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from "react";
+import React, {useCallback, useEffect, useRef, useState} from "react";
 import {useOutletContext} from "react-router";
 import {PROGRESS_INCREMENT, PROGRESS_INTERVAL_MS, REDIRECT_DELAY_MS} from "../lib/constants";
 import {CheckCircle2, ImageIcon, UploadIcon} from "lucide-react";
@@ -11,6 +11,21 @@ const Upload = ({ onComplete }: uploadProps) => {
     const [file, setFile] = useState<File | null>(null);
     const [isDragging, setIsDragging] = useState(false);
     const [progress, setProgress] = useState(0);
+    const [error, setError] = useState<string | null>(null);
+    const progressIntervalRef = useRef<NodeJS.Timeout | null>(null);
+    const completionTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+    const isMountedRef = useRef(true);
+
+    const MAX_FILE_SIZE = 50 * 1024 * 1024; // 50MB
+
+    useEffect(() => {
+        isMountedRef.current = true;
+        return () => {
+            isMountedRef.current = false;
+            if (progressIntervalRef.current) clearInterval(progressIntervalRef.current);
+            if (completionTimeoutRef.current) clearTimeout(completionTimeoutRef.current);
+        };
+    }, []);
 
     const { isSignedIn } = useOutletContext<AuthContext>();
 
@@ -24,13 +39,23 @@ const Upload = ({ onComplete }: uploadProps) => {
         reader.onloadend = () => {
             const base64Data = reader.result as string;
 
-            const interval = setInterval(() => {
+            if (progressIntervalRef.current) clearInterval(progressIntervalRef.current);
+
+            progressIntervalRef.current = setInterval(() => {
+                if (!isMountedRef.current) {
+                    if (progressIntervalRef.current) clearInterval(progressIntervalRef.current);
+                    return;
+                }
+
                 setProgress((prev) => {
                     const next = prev + PROGRESS_INCREMENT;
                     if (next >= 100) {
-                        clearInterval(interval);
-                        setTimeout(() => {
-                            onComplete?.(base64Data);
+                        if (progressIntervalRef.current) clearInterval(progressIntervalRef.current);
+                        
+                        completionTimeoutRef.current = setTimeout(() => {
+                            if (isMountedRef.current) {
+                                onComplete?.(base64Data);
+                            }
                         }, REDIRECT_DELAY_MS);
                         return 100;
                     }
@@ -54,20 +79,32 @@ const Upload = ({ onComplete }: uploadProps) => {
     const handleDrop = (e: React.DragEvent) => {
         e.preventDefault();
         setIsDragging(false);
+        setError(null);
 
         if (!isSignedIn) return;
 
         const droppedFile = e.dataTransfer.files[0];
-        if (droppedFile && droppedFile.type.startsWith('image/')) {
-            processFile(droppedFile);
+        if (droppedFile) {
+            if (droppedFile.size > MAX_FILE_SIZE) {
+                setError("File is too large. Maximum size is 50 MB.");
+                return;
+            }
+            if (droppedFile.type.startsWith('image/')) {
+                processFile(droppedFile);
+            }
         }
     };
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setError(null);
         if (!isSignedIn) return;
 
         const selectedFile = e.target.files?.[0];
-        if (selectedFile){
+        if (selectedFile) {
+            if (selectedFile.size > MAX_FILE_SIZE) {
+                setError("File is too large. Maximum size is 50 MB.");
+                return;
+            }
             processFile(selectedFile);
         }
     };
@@ -98,7 +135,9 @@ const Upload = ({ onComplete }: uploadProps) => {
                                 "Click to upload or just drag and drop"
                             ): ("Please sign in to upload")}
                         </p>
-                        <p className="help">Maximum file size is 50 MB</p>
+                        <p className={`help ${error ? 'error' : ''}`}>
+                            {error || "Maximum file size is 50 MB"}
+                        </p>
                     </div>
                 </div>
             ) : (

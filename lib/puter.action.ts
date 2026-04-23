@@ -9,8 +9,8 @@ export const signOut = async () => {
 }
 
 export const getCurrentUser = async () => {
+    const puter = (await import("@heyputer/puter.js")).default;
     try {
-        const puter = (await import("@heyputer/puter.js")).default;
         return await puter.auth.getUser();
     } catch {
         return null;

@@ -222,6 +222,10 @@
 
         .help {
           @apply text-zinc-500 text-xs;
+
+          &.error {
+            @apply text-red-500 font-medium;
+          }
         }
       }
 
