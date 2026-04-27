@@ -5,9 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6788d764-b5cd-4fb8-8edd-a3ccd0534477" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/lib/ai.action.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.env.local" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/puter.worker.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/routes/home.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/home.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/routes/visualizer.$id.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/visualizer.$id.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/puter.action.ts" beforeDir="false" afterPath="$PROJECT_DIR$/lib/puter.action.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -76,7 +79,10 @@
       <workItem from="1776920963480" duration="2308000" />
       <workItem from="1776923438234" duration="2868000" />
       <workItem from="1776926351254" duration="23009000" />
-      <workItem from="1777054379911" duration="385000" />
+      <workItem from="1777054379911" duration="1345000" />
+      <workItem from="1777139731344" duration="4260000" />
+      <workItem from="1777191630398" duration="5580000" />
+      <workItem from="1777276446663" duration="4880000" />
     </task>
     <servers />
   </component>
