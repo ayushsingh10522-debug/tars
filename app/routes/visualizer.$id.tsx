@@ -18,6 +18,8 @@ const VisualizerId = () => {
     const [isProcessing, setIsProcessing] = useState(false);
     const [currentImage, setCurrentImage] = useState<string | null>(null);
 
+    const [shareStatus, setShareStatus] = useState<'idle' | 'sharing' | 'copied'>('idle');
+
     const handleBack = () => navigate('/');
 
     const handleExport = () => {
@@ -29,6 +31,30 @@ const VisualizerId = () => {
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
+    };
+
+    const handleShare = async () => {
+        if (!project || !currentImage || shareStatus === 'sharing') return;
+
+        try {
+            setShareStatus('sharing');
+
+            const updatedItem = {
+                ...project,
+                renderedImage: currentImage,
+                isPublic: true,
+                ownerId: project.ownerId ?? userId ?? null,
+            };
+
+            await createProject({ item: updatedItem, visibility: 'public' });
+
+            await navigator.clipboard.writeText(window.location.href);
+            setShareStatus('copied');
+            setTimeout(() => setShareStatus('idle'), 1500);
+        } catch (e) {
+            console.error('Share failed', e);
+            setShareStatus('idle');
+        }
     };
 
     const runGeneration = async (item: DesignItem) => {
@@ -141,9 +167,19 @@ const VisualizerId = () => {
                             >
                                 <Download className="w-4 h-4 mr-2" /> Export
                             </Button>
-                            <Button size="sm" onClick={() => {}} className="share">
+                            {/*<Button size="sm" onClick={() => {}} className="share">*/}
+                            {/*    <Share2 className="w-4 h-4 mr-2" />*/}
+                            {/*    Share*/}
+                            {/*</Button>*/}
+
+                            <Button
+                                size="sm"
+                                onClick={handleShare}
+                                className="share"
+                                disabled={!currentImage || shareStatus === 'sharing'}
+                            >
                                 <Share2 className="w-4 h-4 mr-2" />
-                                Share
+                                {shareStatus === 'sharing' ? 'Sharing...' : shareStatus === 'copied' ? 'Copied!' : 'Share'}
                             </Button>
                         </div>
                     </div>
