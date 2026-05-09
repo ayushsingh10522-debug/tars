@@ -18,6 +18,7 @@ export default function Home() {
     const navigate = useNavigate();
     const [projects, setProjects] = useState<DesignItem[]>([]);
     const isCreatingProjectRef = useRef(false);
+    const [showDemo, setShowDemo] = useState(false);
 
     const handleUploadComplete = async (base64Image: string) => {
         try {
@@ -105,7 +106,7 @@ export default function Home() {
 
                   </a>
 
-                  <Button variant="outline" size="lg" className="demo">
+                  <Button variant="outline" size="lg" className="demo"  onClick={() => setShowDemo(true)}>
                       Watch Demo
                   </Button>
               </div>
@@ -169,6 +170,26 @@ export default function Home() {
                   </div>
               </div>
           </section>
+          {showDemo && (
+              <div
+                  style={{
+                      position: 'fixed', inset: 0, backgroundColor: 'rgba(0,0,0,0.8)',
+                      zIndex: 1000, display: 'flex', alignItems: 'center', justifyContent: 'center'
+                  }}
+                  onClick={() => setShowDemo(false)}
+              >
+                  <div onClick={(e) => e.stopPropagation()} style={{ width: '90%', maxWidth: '900px', aspectRatio: '16/9', position: 'relative' }}>
+                      <iframe
+                          width="100%"
+                          height="100%"
+                          src="https://www.youtube.com/embed/XaQKKO3xV6U?autoplay=1"
+                          title="Demo Video"
+                          allow="autoplay; encrypted-media"
+                          allowFullScreen
+                      />
+                  </div>
+              </div>
+          )}
       </div>
   )
 }
